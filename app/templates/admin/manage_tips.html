@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Manage Tips</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Product</th>
+                <th>User</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tip in tips %}
+            <tr>
+                <td>{{ tip.id }}</td>
+                <td>{{ tip.title }}</td>
+                <td>{{ tip.product.name }}</td>
+                <td>{{ tip.author.username }}</td>
+                <td>{{ 'Approved' if tip.is_approved else 'Pending' }}</td>
+                <td>{{ tip.rating if tip.rating else 'N/A' }}</td>
+                <td>
+                    {% if not tip.is_approved %}
+                        <form action="{{ url_for('main.approve_tip', tip_id=tip.id) }}" method="post" style="display: inline;">
+                            <input type="submit" value="Approve">
+                        </form>
+                        <form action="{{ url_for('main.reject_tip', tip_id=tip.id) }}" method="post" style="display: inline;">
+                            <input type="submit" value="Reject">
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('main.rate_tip', tip_id=tip.id) }}" method="post" style="display: inline;">
+                            <input type="number" name="rating" min="1" max="10" value="{{ tip.rating or '' }}" required>
+                            <input type="submit" value="Rate">
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

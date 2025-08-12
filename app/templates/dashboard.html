@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Dashboard</h1>
+    <p>Hello, {{ current_user.username }}!</p>
+
+    <h2>Your Stats</h2>
+    <p>Approved Tips: {{ approved_tips_count }}</p>
+    <p>Total Stars Earned: {{ stars_earned }}</p>
+
+    <p><a href="{{ url_for('main.submit_tip') }}">Submit a new Tip</a></p>
+
+    <h2>Your Submitted Tips</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Product</th>
+                <th>Status</th>
+                <th>Rating</th>
+                <th>Attachments</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tip in tips %}
+            <tr>
+                <td>{{ tip.title }}</td>
+                <td>{{ tip.product.name }}</td>
+                <td>{{ 'Approved' if tip.is_approved else 'Pending' }}</td>
+                <td>{{ tip.rating if tip.rating else 'N/A' }}</td>
+                <td>
+                    {% for attachment in tip.attachments %}
+                        <a href="{{ url_for('static', filename='uploads/' + attachment.filename) }}">{{ attachment.filename }}</a><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
