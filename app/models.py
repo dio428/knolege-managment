@@ -22,6 +22,7 @@ class User(UserMixin, db.Model):
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), index=True, unique=True, nullable=False)
+    barcode = db.Column(db.String(128), index=True, unique=True)
     tips = db.relationship('Tip', backref='product', lazy='dynamic')
 
     def __repr__(self):

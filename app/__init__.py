@@ -29,7 +29,7 @@ def create_app(config_class=None):
     # Initialize extensions
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_view = 'login'  # The name of the login view
+    login_manager.login_view = 'main.login'  # The name of the login view
 
     @login_manager.user_loader
     def load_user(user_id):
