@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User Reports</h1>
+
+    <h2>Filter by Date</h2>
+    <form action="" method="get">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="start_date">
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="end_date">
+        <input type="submit" value="Filter">
+    </form>
+
+    <hr>
+
+    <h2>Total Stars per User</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Total Stars</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in users_report %}
+            <tr>
+                <td>{{ report.username }}</td>
+                <td>{{ report.total_stars }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

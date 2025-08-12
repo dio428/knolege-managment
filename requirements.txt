@@ -1,0 +1,6 @@
+Flask
+Flask-WTF
+Flask-SQLAlchemy
+Flask-Login
+gunicorn
+Werkzeug<3.0.0
