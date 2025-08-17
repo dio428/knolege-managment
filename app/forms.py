@@ -20,6 +20,7 @@ class UserCreationForm(FlaskForm):
 class ProductForm(FlaskForm):
     """Form for admin to create a new product."""
     name = StringField('Product Name', validators=[DataRequired()])
+    barcode = StringField('Barcode', validators=[DataRequired()])
     submit = SubmitField('Create Product')
 
 class TipSubmissionForm(FlaskForm):

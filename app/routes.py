@@ -64,13 +64,34 @@ def manage_users():
 def manage_products():
     form = ProductForm()
     if form.validate_on_submit():
-        product = Product(name=form.name.data)
+        product = Product(name=form.name.data, barcode=form.barcode.data)
         db.session.add(product)
-        db.session.commit()
-        flash('Product created successfully.')
+        try:
+            db.session.commit()
+            flash('Product created successfully.')
+        except Exception as e:
+            db.session.rollback()
+            flash('Error: Product with this name or barcode already exists.')
         return redirect(url_for('main.manage_products'))
     products = Product.query.all()
     return render_template('admin/manage_products.html', title='Manage Products', form=form, products=products)
+
+@bp.route('/create_product', methods=['GET', 'POST'])
+@login_required
+def create_product():
+    form = ProductForm()
+    if form.validate_on_submit():
+        product = Product(name=form.name.data, barcode=form.barcode.data)
+        db.session.add(product)
+        try:
+            db.session.commit()
+            flash('Product created successfully. You can now submit tips for it.')
+            return redirect(url_for('main.dashboard'))
+        except Exception as e:
+            db.session.rollback()
+            flash('Error: Product with this name or barcode already exists.')
+            return redirect(url_for('main.create_product'))
+    return render_template('create_product.html', title='Create Product', form=form)
 
 @bp.route('/submit_tip', methods=['GET', 'POST'])
 @login_required

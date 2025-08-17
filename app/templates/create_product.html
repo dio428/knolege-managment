@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Manage Products</h1>
+    <h1>Create a New Product</h1>
+    <p>Add a new product to the database. Once created, you and other users can submit tips for it.</p>
 
-    <h2>Create New Product</h2>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -22,26 +22,4 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
-
-    <hr>
-
-    <h2>Existing Products</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Barcode</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.barcode }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 {% endblock %}
